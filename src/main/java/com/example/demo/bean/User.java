@@ -1,4 +1,6 @@
-package com.example.demo.base;
+package com.example.demo.bean;
+
+import com.example.demo.base.Status;
 
 public class User {
     private String name;

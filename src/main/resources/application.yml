@@ -1,5 +1,5 @@
 server:
   port: 9090
-student:
-  name: lala
-  age: 25
+spring:
+  messages:
+    basename: i18n/messages
