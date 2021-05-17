@@ -24,10 +24,10 @@ public class BaseData {
     private static Calendar rightNow = Calendar.getInstance();
     static {
         try {
-            targetAssertionDoen = -1D;//止损
+            targetAssertionDoen = 100D;//止损
             targetAssertionUp = 200D;//止盈
             interval = 1;
-            start = dateFormat.parse("2008-01-01");
+            start = dateFormat.parse("2008-05-14");
 //            start = dateFormat.parse("2008-05-14");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -36,10 +36,10 @@ public class BaseData {
 
     public static void main(String[] args) throws IOException {
         Entity entity = DataUtil.get("src/main/java/com/example/demo/fund/data/160119.txt");//南方中证500ETF联接A
-        for (int i=0;i>-15;i--) {
-            principalSum = 100D;
-            actualSum = 100D;
-            principal = 100D;
+        for (int i=0;i>-13;i--) {
+            principalSum = 500D;
+            actualSum = 500D;
+            principal = 500D;
             rightNow.setTime(start);
             rightNow.add(Calendar.YEAR, interval);
             start = rightNow.getTime();
@@ -47,7 +47,7 @@ public class BaseData {
             System.out.println();
         }
     }
-
+    private static Calendar cl = Calendar.getInstance();
     private static void getProfit(Entity entity, Date start) {
         rightNow.setTime(start);
         rightNow.add(Calendar.YEAR, interval);
@@ -56,8 +56,10 @@ public class BaseData {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setGroupingUsed(false);
         nf.setMaximumFractionDigits(4);
-        for (Entity.Item item : entity.LSJZList) {
+        for (int i = entity.LSJZList.size();i>0;i--) {
+            Entity.Item item = entity.LSJZList.get(i-1);
             Date FSRQ = item.FSRQ;//日期
+            cl.setTime(FSRQ);
             if (FSRQ.after(start) && FSRQ.before(end)) {
                 String JZZZL = item.JZZZL;//收益率
                 if (StringUtils.isEmpty(JZZZL)) {
@@ -65,16 +67,18 @@ public class BaseData {
                     continue;
                 }
                 Double rate = new Double(JZZZL);
-                actualSum += actualSum * rate / 100;
+                actualSum = ArithmeticUtils.add(actualSum,ArithmeticUtils.div(ArithmeticUtils.mul(actualSum , rate) , 100));
                 actualSum = new Double(nf.format(actualSum));
 
-//                actualSum += principal;//最终金额
-//                principalSum += principal;//本金
-
-                if (rate < targetAssertionDoen) {
-                    actualSum += principal;//最终金额
-                    principalSum += principal;//本金
+                if ((cl.get(Calendar.DAY_OF_WEEK)-1)==2) {
+                    actualSum = ArithmeticUtils.add(actualSum, principal);//最终金额
+                    principalSum = ArithmeticUtils.add(principalSum, principal);//本金
                 }
+
+//                if (rate < targetAssertionDoen) {
+//                    actualSum += principal;//最终金额
+//                    principalSum += principal;//本金
+//                }
                 /*if (rate >  targetAssertionUp){
                     actualSum -= principal;//最终金额
                     principalSum -= principal;//本金
@@ -82,6 +86,6 @@ public class BaseData {
             }
         }
 //        System.out.print("本金：%f"+principalSum+"    最终金额："+actualSum);
-        System.out.format("日期：%s    \t本金：%.4f\t    最终金额：%.4f\t    收益：%.4f\t    收益率：%.4f",(dateFormat.format(start)+"~"+dateFormat.format(end)), principalSum,actualSum,(actualSum - principalSum),((actualSum - principalSum)/actualSum));
+        System.out.format("本金：%.4f\t    最终金额：%.4f\t    收益：%.4f\t    收益率：%.4f\t    日期：%s", principalSum,actualSum,(actualSum - principalSum),((actualSum - principalSum)/actualSum),(dateFormat.format(start)+"~"+dateFormat.format(end)));
     }
 }
