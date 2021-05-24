@@ -35,15 +35,17 @@ public class BaseData {
     }
 
     public static void main(String[] args) throws IOException {
-        Entity entity = DataUtil.get("src/main/java/com/example/demo/fund/data/160119.txt");//南方中证500ETF联接A
+//        Entity entity = DataUtil.get("src/main/java/com/example/demo/fund/data/160119.txt");//南方中证500ETF联接A
+        Entity entity1 = DataUtil.get("src/main/java/com/example/demo/fund/data/110011.txt");//易方达中小盘
         for (int i=0;i>-13;i--) {
-            principalSum = 500D;
-            actualSum = 500D;
-            principal = 500D;
+            principalSum = 50000D;
+            actualSum = 50000D;
+            principal = 50000D;
             rightNow.setTime(start);
             rightNow.add(Calendar.YEAR, interval);
             start = rightNow.getTime();
-            getProfit(entity, start);
+//            getProfit(entity, start);
+            getProfit(entity1, start);
             System.out.println();
         }
     }
@@ -70,10 +72,10 @@ public class BaseData {
                 actualSum = ArithmeticUtils.add(actualSum,ArithmeticUtils.div(ArithmeticUtils.mul(actualSum , rate) , 100));
                 actualSum = new Double(nf.format(actualSum));
 
-                if ((cl.get(Calendar.DAY_OF_WEEK)-1)==2) {
-                    actualSum = ArithmeticUtils.add(actualSum, principal);//最终金额
-                    principalSum = ArithmeticUtils.add(principalSum, principal);//本金
-                }
+//                if ((cl.get(Calendar.DAY_OF_WEEK)-1)==2) {
+//                    actualSum = ArithmeticUtils.add(actualSum, principal);//最终金额
+//                    principalSum = ArithmeticUtils.add(principalSum, principal);//本金
+//                }
 
 //                if (rate < targetAssertionDoen) {
 //                    actualSum += principal;//最终金额

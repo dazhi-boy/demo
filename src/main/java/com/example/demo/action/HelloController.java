@@ -16,8 +16,8 @@ public class HelloController {
     }
 
     @RequestMapping("/hello")
-    public ApiResult<String> hello() {
-
+    public ApiResult<String> hello() throws InterruptedException {
+//        Thread.sleep(50);
         ApiResult<String> apiResult = new ApiResult().success("asdf");
 
         return apiResult;
