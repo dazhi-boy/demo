@@ -37,7 +37,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-        localeResolver.setDefaultLocale(new Locale("cn_CH"));
+        localeResolver.setDefaultLocale(new Locale("cn_ch"));
         localeResolver.setTimeZoneAttributeName("GMT+8");
         return localeResolver;
     }

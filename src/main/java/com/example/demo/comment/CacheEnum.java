@@ -19,8 +19,8 @@ public class CacheEnum {
         cacheEN.put(ApiResultStatus.SUCCESS, "two hundred");
         cacheEN.put(Status.adult, "adult");
 
-        cache.put("cn_CH",cacheCN);
-        cache.put("en_US",cacheEN);
+        cache.put("cn_ch",cacheCN);
+        cache.put("en_us",cacheEN);
     }
 
     public static Map<Enum, String> getCache(String locale) {
